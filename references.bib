@@ -1,48 +1,85 @@
-@Book(abrial1996b,
-  Author	= {Abrial, Jean-Raymond},
-  Title		= {The {B}-Book: Assigning Programs to Meanings},
-  Year		= 1996,
-  Publisher	= {Cambridge University Press},
-  Address	= {New York, NY, USA}
-)
+@book{zobel,
+  author = {Alfred V. Aho; Monica S. Lam; Ravi Sethi; Jeffrey D. Ullman},
+  title = {Compilers: Principles, Techniques, and Tools},
+  year = {2007},
+  isbn = {1447166388},
+  publisher = {Springer Publishing Company, Incorporated},
+  edition = {3rd},
+  abstract = {All researchers need to write or speak about their work, and to have research that is worth presenting. Based on the author's decades of experience as a researcher and advisor, this third edition provides detailed guidance on writing and presentations and a comprehensive introduction to research methods, the how-to of being a successful scientist. Topics include: Development of ideas into research questions; How to find, read, evaluate and referee other research; Design and evaluation of experiments and appropriate use of statistics; Ethics, the principles of science and examples of science gone wrong. Much of the book is a step-by-step guide to effective communication, with advice on: Writing style and editing; Figures, graphs and tables; Mathematics and algorithms; Literature reviews and referees reports; Structuring of arguments and results into papers and theses; Writing of other professional documents; Presentation of talks and posters. Written in an accessible style and including handy checklists and exercises, Writing for Computer Science is not only an introduction to the doing and describing of research, but is a valuable reference for working scientists in the computing and mathematical sciences.}
+}
+@InProceedings{GeneratingRewritableAST,
+  author="Overbey, Jeffrey L.
+  and Johnson, Ralph E.",
+  editor="Ga{\v{s}}evi{\'{c}}, Dragan
+  and L{\"a}mmel, Ralf
+  and Van Wyk, Eric",
+  title="Generating Rewritable Abstract Syntax Trees",
+  booktitle="Software Language Engineering",
+  year="2009",
+  publisher="Springer Berlin Heidelberg",
+  address="Berlin, Heidelberg",
+  pages="114--133",
+  abstract="Building a production-quality refactoring engine or similar source code transformation tool traditionally requires a large amount of hand-written, language-specific support code. We describe a system which reduces this overhead by allowing both a parser and a fully rewritable AST to be generated automatically from an annotated grammar, requiring little or no additional hand-written code. The rewritable AST is ideal for implementing program transformations that preserve the formatting of the original sources, including spacing and comments, and the system can be augmented to allow transformation of C-preprocessed sources even when the target language is not C or C++. Moreover, the AST design is fully customizable, allowing it to resemble a hand-coded tree. The amount of required annotation is typically quite small, and the annotated grammar is often an order of magnitude smaller than the generated code.",
+  isbn="978-3-642-00434-6"
+}
 
-@Book(abrial2010modeling,
-  Author	= {Abrial, Jean-Raymond},
-  Title		= {Modeling in {Event}-{B}: System and Software Engineering},
-  Year		= 2010,
-  Publisher	= {Cambridge University Press},
-  Address	= {New York, NY, USA}
-)
-
-@Book(carlsson1988sicstus,
-  Author	= {Carlsson, Mats and Widen, Johan and Andersson, Johan and Andersson, Stefan and Boortz, Kent and Nilsson, Hans and Sj{\"o}land, Thomas},
-  Title		= {{SICStus} Prolog User's Manual},
-  Year		= 1988,
-  Volume	= 3,
-  Publisher	= {Swedish Institute of Computer Science},
-  Address	= {Kista, Sweden},
-  Number	= 1
-)
-
-@Article(leuschel2008prob,
-  Author	= {Leuschel, Michael and Butler, Michael},
-  Title		= {{ProB}: An Automated Analysis Toolset for the {B} Method},
-  Year		= 2008,
-  Month		= mar,
-  Journal	= {International Journal on Software Tools for Technology Transfer},
-  Volume	= 10,
-  Pages		= {185--203},
-  Number	= 2
-)
-
-@InProceedings(leuschel2003prob,
-  Author	= {Leuschel, Michael and Butler, Michael},
-  Title		= {{ProB}},
-  Year		= 2003,
-  Month		= sep,
-  Booktitle	= {{FME} 2003: Formal Methods},
-  Volume	= 2805,
-  Pages		= {855--874},
-  Publisher	= {Springer Berlin Heidelberg},
-  Address	= {Berlin, Heidelberg}
-)
+@article{pawlak:hal-01169705,
+  TITLE = "{Spoon: A Library for Implementing Analyses and Transformations of Java Source Code}",
+  AUTHOR = {Pawlak, Renaud and Monperrus, Martin and Petitprez, Nicolas and Noguera, Carlos and Seinturier, Lionel},
+  JOURNAL = "{Software: Practice and Experience}",
+  PUBLISHER = "{Wiley-Blackwell}",
+  PAGES = {1155-1179},
+  VOLUME = {46},
+  URL = {https://hal.archives-ouvertes.fr/hal-01078532/document},
+  YEAR = {2015},
+  doi = {10.1002/spe.2346},
+}
+@inproceedings{10.5555/2725669.2725678,
+  author = {Overbey, Jeffrey L.},
+  title = {Immutable source-mapped abstract syntax tree: a design pattern for refactoring engine APIs},
+  year = {2013},
+  isbn = {9781941652008},
+  publisher = {The Hillside Group},
+  address = {USA},
+  abstract = {Many automated refactoring tools provide an extensibility mechanisms that allows third parties to contribute new refactorings. However, implementing nontrivial refactorings requires deep syntactic knowledge about the program being refactored. Refactoring tools almost always use abstract syntax trees (ASTs) to describe the structure of source code. Therefore, it may be desirable to expose these trees via an API. This pattern describes the common attributes that ASTs typically exhibit in order to be useful for implementing nontrivial refactorings while, at the same time, maintaining the characteristics of good API design. In particular, these trees tend to have an immutable structure, and they maintain very detailed information about the source code, including exact character positions. This pattern is used in the Eclipse Java Development Tools' refactoring API as well as the Microsoft "Roslyn" CTP, among other uses.},
+  booktitle = {Proceedings of the 20th Conference on Pattern Languages of Programs},
+  articleno = {7},
+  numpages = {8},
+  keywords = {APIs, ASTs, abstract syntax trees, immutability, refactoring},
+  location = {Monticello, Illinois},
+  series = {PLoP '13}
+}
+@misc{astra,
+  title        = "Astra",
+  author       = "",
+  howpublished = "\url{https://github.com/alfasoftware/astra}",
+  note         = "Accessed: 2024-06-08"
+}
+@inproceedings{10.1145/2635868.2635908,
+  author = {Overbey, Jeffrey L. and Behrang, Farnaz and Hafiz, Munawar},
+  title = {A foundation for refactoring C with macros},
+  year = {2014},
+  isbn = {9781450330565},
+  publisher = {Association for Computing Machinery},
+  address = {New York, NY, USA},
+  url = {https://doi.org/10.1145/2635868.2635908},
+  doi = {10.1145/2635868.2635908},
+  abstract = {This paper establishes the concept of "preprocessor dependences" as a foundation for building automated refactoring tools that transform source code containing lexical macros and conditional compilation directives, such as those provided by the C preprocessor. We define a preprocessor dependence graph (PPDG) that models the relationships among macro definitions, macro invocations, and conditional compilation directives in a file--the relationships that must be maintained for the semantics of the C preprocessor to be preserved. For many refactorings, a tool can construct a PPDG from the code before and after it is transformed, then perform a linear-time comparison of the two graphs to determine whether the refactoring will operate correctly in the presence of macros and conditional compilation directives. The proposed technique was implemented in OpenRefactory/C and tested by applying refactorings to GNU Coreutils version 8.21. Empirical results indicate that the technique is effective; it successfully handled refactoring scenarios in which Eclipse CDT, Visual Assist X, and XRefactory all refactored code incorrectly.},
+  booktitle = {Proceedings of the 22nd ACM SIGSOFT International Symposium on Foundations of Software Engineering},
+  pages = {75–85},
+  numpages = {11},
+  keywords = {Refactoring, Preprocessor, C},
+  location = {Hong Kong, China},
+  series = {FSE 2014}
+}
+@misc{antlr,
+  title        = "ANTLR",
+  author       = "",
+  howpublished = "\url{https://www.antlr.org/}",
+  note         = "Accessed: 2024-06-08"
+}
+@misc{antlr_java_grammar,
+  title       = "ANTLR Java version 20 grammar definition",
+  howpublished = "\url{https://github.com/antlr/grammars-v4/blob/master/java/java20/Java20Parser.g4}",
+  not         = "Accessed: 2024-06-08"
+}

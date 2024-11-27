@@ -1,0 +1,28 @@
+\section{Introduction}
+
+\subsection{Motivation}
+
+% Basic introduction
+Software developers are often facing the issue of maintaining large amount of source code. The keep the source code up to date, often times a process called refactoring is needed, in which the software developers update the code.
+
+% Detailed background
+To allow the software developers to perform these updates automatically, most integrated development environments (IDE) provide tools to perform predefined refactorings automatically. The more source code a developer has to maintain, it gets increasingly difficult to perform a refactoring. One way to create automated custom refactorings is by parsing the source code and building it into an abstract syntax tree (AST), which can be used to manipulate the source code.
+
+% General problem
+The tools given by an IDE or other sources are sometimes not sufficient to perform an automated refactoring, therefore other methods of generating custom refactorings are required. 
+
+% Summarizing result
+Here we provide a tool, which can parse any programming language based on their corresponding grammar definition and generates a AST which can be modified by the user and afterwards reverted back to the source code.
+
+% What does the main result reveal?
+
+TODO: Discussion
+
+\subsection{Related work}
+
+There are many parser generators that have a similar approach, but different goals. One major example is ANTLR, which generates a parser for a given grammar. The generated parsers are mainly used for further use in a compiler. This usecase differs from the usecase of refactoring, as the compiler does not need whitespaces, comments or preprocessor statements in most cases. In the use case of refactoring, we need to preserve all of these tokens to reconstruct the source code as accurately as possible. We do not want to loose all comments due to a refactoring beeing made. Also, this thesis provides a tool which provides an API specifically aimed to refactor source code.
+
+\subsection{Tools used}
+
+The machine learning assistant of the IntelliJ IDE was used while writing the source code.
+DeepL Write was used to check the grammar and spelling of the thesis.
