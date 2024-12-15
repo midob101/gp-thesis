@@ -1,0 +1,23 @@
+
+\section{Grammars}
+
+\subsection{MiniJava}
+
+A grammar for a java subset has been defined, known as MiniJava. This is a very limited subset of Java, but it represents common constructs found in modern programming languages.
+It includes basic object oriented programming, simple conditional statements, while loops and basic arithmetic operations. However, the grammar is quite limited. For example, it does not
+allow any other comparison operator then \verb|<| and not more then one arithmetic operation without brackets. As these limitations make it hard, to create meaningfull refactorings, we have extended
+the syntax of MiniJava aswell to allow for other operations.
+
+\subsection{Extended MiniJava Subset}
+
+The extended MiniJava grammar includes a few major changes. The first one allows for more comparison operators. Instead of only \verb|<| also \verb|>, <=, >=, ==| can be used.
+Another change is that \verb|return| is now a normal statemet. This means, that \verb|return| can appear anywhere in method declarations and not only anymore at the end of a method.
+
+These changes will allow us to demonstrate two refactorings which can be done with this tool. 
+
+
+\subsection{Automated Refactoring}
+
+Hier Beispiel/Beispiele für automatisierte Refactorings anführen. Beispielsweise Funktionsnamen von underscore zu camelCase überführen.
+
+test
