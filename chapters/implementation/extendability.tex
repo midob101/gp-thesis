@@ -1,0 +1,93 @@
+\subsection{Extendability}
+
+To allow for possible extensibility, we allow for several types of customization
+
+\subsubsection{Lexer}
+
+As mentioned before, lexer definitions can contain custom matchers. 
+These matchers are custom implementations that are referenced by a name in the grammar file. 
+These classes are written by the user and registered by calling \verb|CustomMatcherRegistry.registerCustomMatcher|. 
+A custom matcher must implement the \verb|ICustomMatcher| interface. 
+A matcher gets a \verb|LexerContext| and returns \verb|null| or the matched string. 
+Using the \verb|LexerContext| parameter, the matcher can receive the remaining input and check if the beginning of the remaining input can be tokenized by this matcher.
+
+The following example is an implementation of a custom matcher, that would match single line comments.
+
+\begin{lstlisting}[language=Java, caption=Example of a custom matcher]
+public class ExampleCustomMatcher implements ICustomMatcher {
+    @Override
+    public String match(LexerContext context) {
+        if(context.getNextNChars(2).equals("//")) {
+            // Find the end of line. This will be the comment token
+            String remaining = context.getRemainingSource();
+            Pattern p = Pattern.compile(".*(\r\n|\r|\n|$)");
+            Matcher matcher = p.matcher(remaining);
+            if (matcher.find()) {
+                return matcher.group();
+            }
+        }
+
+        return null;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{AST Generation}
+
+We allow several ways to customize AST generation. 
+First, you can implement custom modifiers for grammar symbols.
+You can also post-process and decorate the AST. 
+For example, you can replace the tree nodes with your own implementation by extending \verb|AbstractSyntaxTreeNode|.
+
+The following example is an implementation of a tree node that is simply a string.
+This tree node can be used to add or replace code in the AST.
+
+\begin{lstlisting}[language=Java, caption=Implementation of StringTreeNode]
+public class StringTreeNode extends AbstractSyntaxTreeNode {
+    private final String value;
+
+    public StringTreeNode(String value) {
+        this.value = value;
+    }
+
+    public String getDisplayValue() {
+        return "StringTreeNode, value: " + this.value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    protected String getSources() {
+        return this.value;
+    }
+}
+\end{lstlisting}
+
+\subsubsection{Selectors}
+
+Custom selectors can be defined by implementing \verb|ISelector|. 
+These can be easily defined and used with the query methods of the tree node.
+
+The following example shows the implementation of a selector that matches a tree node based on the production used to create that node.
+
+\begin{lstlisting}[language=Java,caption=Custom selector implementation]
+public class ProductionSelector extends BaseSelector {
+    private final String production;
+
+    public ProductionSelector(String production) {
+        this.production = production;
+    }
+
+    @Override
+    public boolean matches(AbstractSyntaxTreeNode treeNode) {
+        if(treeNode instanceof ProductionTreeNode convertedNode) {
+            return convertedNode.getProduction()
+                                .leftHandSymbol()
+                                .name()
+                                .equals(this.production);
+        }
+        return false;
+    }
+}
+\end{lstlisting}

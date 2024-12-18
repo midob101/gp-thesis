@@ -1,0 +1,70 @@
+\subsection{Grammar file syntax}
+The productions and lexer definitions are defined separately from the implementations in their own text files. 
+Each language has exactly one text file defining the productions and lexer definitions. The contents are divided into four different chapters.
+
+The following example shows a grammar for arithmetic expressions that could be found in a programming language grammar.
+
+This grammar allows to parse simple arithmetic expressions and allows comments and whitespaces.
+
+\begin{lstlisting}[caption=Grammar file example]
+LANGUAGE_DEF
+    grammar_start = S;
+
+LEXER_RULES
+    add = "+";
+    subtract = "-";
+    multiply = "*";
+    divide = "/";
+    bracket_open = "(";
+    bracket_close = ")";
+    integer = regex(\d+);
+    whitespace = regex(\s+);
+    single_line_comment = customMatcher(singleLineCommentMatcher);
+    multi_line_comment = customMatcher(multiLineCommentMatcher);
+
+HIDDEN_LEXER_RULES
+    whitespace, single_line_comment, multi_line_comment;
+
+PRODUCTIONS
+    S   ->  S[alias=left] add T[alias=right] | 
+            S[alias=left] subtract T[alias=right] | 
+            T;
+    T   ->  T[alias=left] multiply F[alias=right] | 
+            T[alias=left] divide F[alias=right] | 
+            F;
+    F   ->  bracket_open S bracket_close | 
+            integer;
+\end{lstlisting}
+
+This grammar file would be able to parse the following sample code:
+
+\begin{lstlisting}[caption=Grammar file example]
+// Arithmetic grammar test
+(5+10) /** inline comment */ 
+* (15*20)
+\end{lstlisting}
+
+The first chapter is \verb|LANGUAGE_DEF|. This contains some general definitions for the language. 
+This chapter contains e.g. which comment styles are allowed and how they are identified, the name of the language, the file extension used, whether the language is case-sensitive, and which production should be used as the starting production, 
+whether the language is case-sensitive or not, and which production should be used as the starting production. 
+All settings here are defined as key-value pairs.
+
+The second chapter is the \verb|LEXER_RULES|. 
+This defines all the tokens that can occur in the source file and that the lexer should handle. 
+The lexer can handle three different types of definitions. 
+The first type matches a fixed string. The second type matches a regex. 
+The last type uses a custom implementation to check for a match. 
+The last matching definition wins. 
+For example, the token definition \verb|true_literal = "true";| and the definition \verb|identifier = regex([a-zA-Z_][a-zA-Z_0-9]*);| would both match the string \verb|true|. 
+Therefore, the more general \verb|identifier| token should be defined before the \verb|true_literal| token. 
+This will cause the lexer to recognize the text \verb|true| as \verb|true_literal|. 
+A lexer key must be written in all lowercase (and uppercase) letters.
+
+The chapter \verb|HIDDEN_LEXER_RULES| is a comma separated list of lexer definition keys, 
+that should not be handled in the parsing process and should not be visible in the AST by default. 
+
+The chapter \verb|GRAMMAR_RULES| contains all productions of this language. The syntax is similar, but not identical, to the backus natus form. (TODO: Source). The syntax has been extended with most of the modifiers suggested by \cite{GeneratingRewritableAST}. The terminals are the keys of the lexer definitions. The nonterminals are defined by the left sides of the productions. All nonterminals must be written in uppercase and underscore. \verb|EPSILON| is used for the empty word. Each terminal and nonterminal symbol can be extended by a list of modifiers in square brackets after the name. 
+\verb|S -> S[alias=left] add T[alias=right]| defines the production with \verb|S| on the left and \verb|S add T| on the right. 
+\verb|S| refers to the same production, \verb|T| refers to a different production. 
+\verb|add| refers to a lexer definition. 
+\verb|[alias=right]| sets an alias in the AST for the \verb|T| production.

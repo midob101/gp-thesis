@@ -1,4 +1,29 @@
-Fassen Sie die Fragestellung, Motivation und Ergebnisse Ihrer Arbeit
-hier in wenigen Worten zusammen.
 
-Die Zusammenfassung sollte den Umfang einer Seite nicht überschreiten.
+% Basic introduction
+Software developers are often facing the issue of maintaining large amount of source code. 
+The keep the source code up to date, often times a process called refactoring is needed, in which the software developers update the code.
+
+% Detailed background
+To allow the software developers to perform these updates automatically, most integrated development environments (IDE) provide tools to 
+perform predefined refactorings automatically. 
+The effort of performing some refactorings on large code bases can be too much to perform manually. 
+Most of the times, the tools provided by the IDE are sufficient to perform the refactorings, but sometimes a custom solution is required.
+One way to create automated custom refactorings is by parsing the source code and building it into an abstract syntax tree (AST), 
+which can be maniup
+
+% General problem
+The tools given by an IDE or other sources are sometimes not sufficient to perform an automated refactoring, 
+therefore other methods of generating custom refactorings are required. 
+
+% Summarizing result
+Here we provide a Java library, which can parse a subset of the context-free language based on their corresponding grammar definition 
+and generates a AST which can be modified by the user and afterwards reverted back to the source code.
+
+% What does the main result reveal?
+
+The program provides an relatively easy method of safe large scale refactorings, however the effort of defining a grammar is large.
+It also has been shown, that this tool can also be used to extend a given programming language and allow for additional features to be added, 
+basicly allowing for an primitive form of source to source compilation. 
+We can also see clear limits with this tool, as it does not include features that are specific to each programming language, like symbol tables, 
+which are not defined by the grammar of the language.
+This limits the amount of refactorings that can be archived without implementing additional functionality on top of the base program.

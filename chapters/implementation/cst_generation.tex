@@ -1,0 +1,27 @@
+\subsection{CST-Generation}
+The concrete syntax tree (CST) is a tree structure that exactly matches the grammar and lexer definitions. 
+The generated CST should also contain nodes that are usually omitted, such as comments or whitespace.
+
+The CST is implemented by a \verb|ConcreteSyntaxTreeNode| class. 
+A node can reference either a production or a lexer token. 
+We keep the productions, as they allow us to make advanced modifications and generate a less verbose abstract syntax tree from the CST. 
+The lexer tokens are maintained because they contain the original sources.
+
+This structure is generated directly by the parser. 
+The parser maintains a second stack containing tree nodes that are not bound to a parent node.
+
+As the parser passes through the token stream provided by the lexer, 
+it generates new tree nodes and pushes them onto the stack whenever either the token is in \verb|HIDDEN_LEXER_RULES| or the action performed is a shift action. 
+
+On a reduce action the parser will also create a new tree node. 
+This tree node will have other tree nodes from the top of the stack as children. 
+This behavior is very similar to how the state stack of the parser manages its state. 
+The main difference is the tokens in the \verb|HIDDEN_LEXER_RULES|. 
+The reduced production may have only one symbol on the right side, but on the tree node stack there are two nodes from \verb|HIDDEN_LEXER_RULES|. 
+In this case the parser will pop three states from the top of the tree node stack and add them as children of the newly created node in reverse order. 
+However, if the parser reaches the \verb|acc| state, it is not guaranteed that the stack contains only the root node. 
+There may be tokens from \verb|HIDDEN_LEXER_RULES| which appeared at the beginning of the parsed string. 
+So the parser will find the root node and prepend all other entries in the tree node stack to the children of the root node. 
+
+With this algorithm, every single token from the lexer's token list is transformed into a tree node and placed in the CST. 
+This guarantees that the whole source code is represented in the CST and that the CST could be transformed back to the source code exactly.

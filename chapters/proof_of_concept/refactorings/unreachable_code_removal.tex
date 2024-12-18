@@ -1,0 +1,6 @@
+\subsection{Unreachable code removal}
+
+There are many cases of unreachable code, we will focus on just one case. Code that appears after a return statement in the same block, is code that will never be executed.
+With this refactoring, we want to remove all code, which is happening after a return statement.
+
+This is done by creating a selector to grab all \verb|return| statements. Once we done that, we receive the parent node of the \verb|return|. Now we loop over the children, and after we found the \verb|return| node, we begin to remove following nodes.

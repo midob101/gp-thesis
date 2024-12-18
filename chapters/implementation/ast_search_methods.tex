@@ -1,0 +1,20 @@
+
+\subsection{AST search methods}
+
+Before any modification can be applied to the AST, firstly the nodes have to be found which should be modified.
+
+For this approach, each ast node has three methods.
+
+\begin{enumerate}
+\item \verb|query: Selector -> QueryResult|
+\item \verb|queryChildren: Selector -> QueryResult|
+\item \verb|queryImmediateChildren: Selector -> QueryResult|
+\end{enumerate}
+
+The \verb|query| methods takes a selector and returns a \verb|QueryResult|. The \verb|QueryResult| contains all nodes in the subtree of the searched node which match the \verb|selector|. The \verb|QueryResult| can also contain the searched node itself.
+
+The \verb|queryChildren| behaves the same, but will not include the searched node itself.
+
+The \verb|queryImmediateChildren| will only include the immediate children of the searched node matching the \verb|selector|.
+
+The \verb|QueryResult| instance also allows to perform queries on the result. This will perform the according method on all nodes in the result and create a new \verb|QueryResult| instance containing the merged results of each node. This allows for easy chaining of selectors. Also \verb|QueryResult| instances can be merged for further processing with the \verb|merge| function.

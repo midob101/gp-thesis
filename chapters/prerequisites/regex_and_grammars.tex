@@ -1,0 +1,32 @@
+\subsection{Regular Expressions and Grammars}
+
+In theoretical computer science, a grammar consists out of a set $\Sigma$ of terminal symbols, a set $N$ of nonterminal symbols, a set $P$ of productions and a start symbol $S$. $S$ is always a nonterminal symbol and therefore $S \in N$. The productions are defined as $P \subseteq (N \cup \Sigma)^+ \times (N \cup \Sigma)^*$. The $^+$ refers to one or more, the $^*$ refers to zero or more.
+
+Grammars can be seperated in different different classes based on the chromsky hierarchy. The main ones we are looking at in this thesis are the contextfree grammars and the regular grammars.
+
+A grammar is context free, if for all productions $p \to q$ in $P$ the following applies: $p \in N$.
+
+A grammar is a regular grammar, if for all produtions $p \to q$ in $p$ the following applies: $p \in N$ and $q \in \Sigma \cup \Sigma N$.
+
+Grammars are used, because they can describe a language. In our use case, they describe an programming language and can be used, to parse the source code. Regular expressions are short statements, that avoid defining an entire grammar definition. Their downside is, that they are not able to describe alot of the features modern programming languages have. For example, it is not possible to write a regular grammar for the language that has the same amount of opening and closing brackets. An example for a regular expression would be this:
+
+\begin{align*}
+a^*ba^*b
+\end{align*}
+
+This would parse all words that have any amount of "a", followed by exactly one b, followed by any amount of "a", followed by exactly one b.
+
+To handle these situations, we require the context free grammars, they are able to parse more cases and are sufficient enough, to parse most programming languages. However, even the context free grammars are not powerfull enough to correctly verify if a given source code is valid. For this, we would technically need context sensitive grammars. Those come with the cost of a worse runtime, therefore usually context free grammars are used when writing compilers and additional verifications are done after the parsing to ensure the language is indeed valid source code.
+
+An example for a context free grammar:
+
+Let $\Sigma = \{E\}, N = \{a, b\}, S = \{E\}$ and the productions defined as:
+
+\begin{align*}
+P = \{&E \to a E b,\\
+&E \to \epsilon\}
+\end{align*}
+
+$\epsilon$ is a special symbol, it refers to the empty word. That means, that $E$ can be derived to nothing. Without this, we would have endless self recursion in the grammar rule.
+
+This grammar would be equivalent to the opening and closing bracket example from previously. This will parse any string, which has for one opening a exactly one opening b.

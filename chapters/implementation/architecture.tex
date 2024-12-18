@@ -1,0 +1,28 @@
+\subsection{Architecture}
+
+The only dependencies used are JUnit and JUnit-jupiter \cite{junit} for testing purposes.
+
+The implementation is split in several packages.
+
+\begin{itemize}
+\item config\_reader: responsible for parsing the language definition files
+\item grammar: provides classes to store the parsed grammar production rules.
+\item language\_definitions: provides an interface to receive various definitions, like the production and lexer rules of a given language.
+\item lexer: contains the lexer process
+\item logger: internal logger class
+\item parser: contains the LR(1) parser implementation
+\item selectors: contains basic selectors and interfaces to define custom ones
+\item syntax\_tree: contains classes for the CST, AST and the CST to AST conversion
+\end{itemize}
+
+The typical workflow will be as followed:
+
+\begin{enumerate}
+\item Parse a language definition, receive the language definition classes
+\item Start the lexer process for a source file, receive the token stream
+\item Start the parser process with the token stream, receive the CST
+\item Start the process to transform the CST to an AST, receive the AST
+\item Query the AST with selectors, receive nodes of the AST
+\item Modify found nodes
+\item Receive text from the AST, overwrite source file with the modified data
+\end{enumerate}

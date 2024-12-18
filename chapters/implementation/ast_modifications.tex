@@ -1,0 +1,16 @@
+\subsection{AST Modifications}
+
+The \verb|AbstractSyntaxTreeNode| class contains multiple methods to make modifications.
+
+\begin{enumerate}
+\item \verb|replace|  Replaces this node with a list of other nodes.
+\item \verb|replaceChild|  Replaces a node in the childrens with a list of other nodes.
+\item \verb|remove| Removes this node
+\item \verb|removeChild| Removes a child
+\item \verb|addChild| Adds a child to the end of the children list
+\item \verb|addChildBefore| Adds a child before another node.
+\item \verb|addChildAfter| Adds a child after another node.
+\item \verb|deepClone| Clones this node and all childrens, returns a node that equals the current one but without a parent reference.
+\end{enumerate}
+
+Each \verb|AbstractSyntaxTreeNode| references their corresponding parent node. To maintain integrity, you can only add nodes that have no parent node and replace only nodes with a parent reference. To add a node to multiple other nodes, you can clone the node to be added.

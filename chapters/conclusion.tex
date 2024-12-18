@@ -1,0 +1,13 @@
+\section{Conclusion}
+
+The implemented library is capable of generating an AST, which retains all informations about the original sources.
+With the provided API it is possible, to traverse and modify the AST in a way to implement custom modifications to
+a given source.
+As the implemented library is not implemented to work for a specific programming language, it is not easily possible
+to obtain informations about certain objects.
+It is not easily possible to receive informations from other parts of an AST, like what type a
+variable is, as these informations are dependend on the source language and may not even be part of the source file.
+
+Therefore, this library is best used for refactorings to single nodes of an AST, which contains all informations required
+to perform the refactoring. For more complex tasks, additional features will have to be implemented, for example a symbol
+table. 
