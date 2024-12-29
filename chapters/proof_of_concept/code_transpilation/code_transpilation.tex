@@ -7,3 +7,19 @@ used to transpile a newer version of JavaScript into an older one, which can be 
 
 The goal of this implementation is to show the power of a rewritable abstract syntax tree. Especially for extended return syntax, we have to apply severe modifications to the sources
 to make it MiniJava compatible.
+
+\subsubsection{Conditionals}
+
+As MiniJava only supports the less then operator, we need to transform every conditional that uses a different operator.
+For this, we use the following equivalent statements for $a, b \in \mathbb{Z}$:
+
+\begin{align}
+    a > b  &\Longleftrightarrow b < a\\
+    a \leq b  &\Longleftrightarrow a < b + 1\\
+    a \geq b  &\Longleftrightarrow b \leq a \Longleftrightarrow b < a + 1\\
+    a = b  &\Longleftrightarrow (a \leq b) \land (a \geq b) \Longleftrightarrow (a < b + 1) \land (b < a+ 1)
+\end{align}
+
+As we have reduced all new comparison operators to the less then operator now, we can implement the refactoring.
+
+This is done by creating a selector to find all comparisons, reading the comparison operator and performing the refactoring.

@@ -2,27 +2,27 @@
 
 The only dependencies used are JUnit and JUnit-jupiter \cite{junit} for testing purposes.
 
-The implementation is split in several packages.
+The following image is supposed to illustrate the architecture and design of the \verb|gp-modifiable-ast| library.
+Each small rectangle represents one entity for the entire program, the small rectangles with \textbf{bold} text are user defined inputs and implementations and
+the ones with \textit{italic} text are implementations of the \verb|gp-modifiable-ast| library.
 
-\begin{itemize}
-\item config\_reader: responsible for parsing the language definition files
-\item grammar: provides classes to store the parsed grammar production rules.
-\item language\_definitions: provides an interface to receive various definitions, like the production and lexer rules of a given language.
-\item lexer: contains the lexer process
-\item logger: internal logger class
-\item parser: contains the LR(1) parser implementation
-\item selectors: contains basic selectors and interfaces to define custom ones
-\item syntax\_tree: contains classes for the CST, AST and the CST to AST conversion
-\end{itemize}
 
-The typical workflow will be as followed:
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.40]{fig/architecture.png}
+    \caption{Architecture of gp-modifiable-ast}
+\end{figure}
 
-\begin{enumerate}
-\item Parse a language definition, receive the language definition classes
-\item Start the lexer process for a source file, receive the token stream
-\item Start the parser process with the token stream, receive the CST
-\item Start the process to transform the CST to an AST, receive the AST
-\item Query the AST with selectors, receive nodes of the AST
-\item Modify found nodes
-\item Receive text from the AST, overwrite source file with the modified data
-\end{enumerate}
+The user defines a grammar file for a given programming language and provides the source code to \verb|gp-modifiable-ast|.
+
+\verb|gp-modifiable-ast| first parses the grammar file and creates a language definition, which contains the grammar productions, lexer rules and generic settings
+about the language.
+
+This language definition is then passed together with the source code by the user into the lexer process, which passes the token stream and the language definition into
+the parse process. The parse process parses the token stream, applies the grammar rules and creates the concrete syntax tree.
+
+In the next step, the concrete syntax tree and the grammar definition will be used to create the abstract syntax tree.
+
+This is the output of the \verb|gp-modifiable-ast| library. By using selectors, which will be defined later, the user can perform search actions on the AST to receive
+specific nodes. On the found nodes, the user can apply modifications and convert the AST back to source code.
+

@@ -21,24 +21,18 @@ The last category are structural \verb|Selectors|.
 These selectors search for nodes that have specific nodes in their children or parents.
 
 The following example of an AST should illustrate the purpose of this category.
-\begin{enumerate}
-\item \verb|METHOD_CALL|
-\begin{enumerate}
-\item \verb|CALLED_ON|
-\begin{enumerate}
-\item \verb|translator|
-\end{enumerate}
-\item \verb|METHOD_NAME|
-\begin{enumerate}
-\item \verb|translate|
-\end{enumerate}
-\end{enumerate}
-\end{enumerate}
+
+\begin{figure}[H]
+    \centering
+	\includegraphics[scale=0.4]{"fig/selector_ast_example.png"}
+    \caption{AST example for selectors}
+\end{figure}
+
 To search for all \verb|METHOD_CALL| nodes, that call translate on a translator object, we will want these types of selectors.
 
 An example selector for this would be
 
-\begin{verbatim}
+\begin{lstlisting}[language=Java, caption=Selector example]
 new AndSelector(
 	new ProductionSelector("METHOD_CALL"),
 	new HasImmediateChildSelector(
@@ -58,6 +52,6 @@ new AndSelector(
 		)
 	)
 )
-\end{verbatim}
+\end{lstlisting}
 
 By calling the \verb|query| method on the root node of the AST, we get all the \verb|METHOD_CALL| nodes in the AST that match those conditions.

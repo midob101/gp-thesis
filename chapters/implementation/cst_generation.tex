@@ -25,3 +25,35 @@ So the parser will find the root node and prepend all other entries in the tree 
 
 With this algorithm, every single token from the lexer's token list is transformed into a tree node and placed in the CST. 
 This guarantees that the whole source code is represented in the CST and that the CST could be transformed back to the source code exactly.
+
+The following code shows a simplified version of the CST generation during the parser process.
+\begin{lstlisting}[language=Java, caption=CST Generation]
+if(isHiddenLexerRule() || isShiftAction()) {
+    danglingTreeNodeStack.push(new TreeNode(currentParseAction));
+} 
+
+if(isReduceAction()) {
+    TreeNode newTopOfStack = new TreeNode(currentParseAction);
+    int i = getRightHandSymbolCount();
+    while(i > 0) {
+        TreeNode currentTopOfStack = danglingTreeNodeStack.pop();
+        newTopOfStack.pushChild(currentTopOfStack);
+        if(!currentTopOfStack.isHiddenLexerRule()) {
+            i--;
+        }
+    }
+    danglingTreeNodeStack.push(newTopOfStack);
+}
+
+if(isAcceptAction()) {
+    TreeNode rootNode = danglingTreeNodeStack.pop();
+
+    while(!danglingTreeNodeStack.isEmpty()) {
+        TreeNode treeNode = danglingTreeNodeStack.pop();
+        rootNode.prependChild(treeNode);
+    }
+
+    return rootNode;
+}
+\end{lstlisting}
+

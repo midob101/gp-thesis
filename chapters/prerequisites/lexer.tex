@@ -1,32 +1,39 @@
-\subsection{Regular Expressions and Grammars}
 
-In theoretical computer science, a grammar consists out of a set $\Sigma$ of terminal symbols, a set $N$ of nonterminal symbols, a set $P$ of productions and a start symbol $S$. $S$ is always a nonterminal symbol and therefore $S \in N$. The productions are defined as $P \subseteq (N \cup \Sigma)^+ \times (N \cup \Sigma)^*$. The $^+$ refers to one or more, the $^*$ refers to zero or more.
+\subsection{Lexer}
 
-Grammars can be seperated in different different classes based on the chromsky hierarchy. The main ones we are looking at in this thesis are the contextfree grammars and the regular grammars.
+The parse process of a compiler is often times split into two parts. The first part is the so called lexer. 
+The task of the lexer is to take in the entire source code and create a so called token stream. 
+The lexer runs with regular expressions and avoids using more complex implementations for the most part.
 
-A grammar is context free, if for all productions $p \to q$ in $P$ the following applies: $p \in N$.
+The lexer is a preparation for the parser, as it removes unwanted characters like whitespaces and generalizes 
+other tokens.
+For example could be any string matching the regular expression \verb|[a-zA-Z_][a-zA-Z_0-9]*| an identifier and \verb|[0-9]+| would be an integer. 
+The name identifier is often used for variable, function and classnames in lexers. 
+By doing this, the parser later only needs to work with the abstract identifier, not with the real input.
 
-A grammar is a regular grammar, if for all produtions $p \to q$ in $p$ the following applies: $p \in N$ and $q \in \Sigma \cup \Sigma N$.
+The following example should illustrate the purpose of the lexer process
+\begin{lstlisting}[language=Java, caption="Example input for the lexer"]
+int get_fixed_sum(int a) {
+    return a + 19284;
+}
+\end{lstlisting}
 
-Grammars are used, because they can describe a language. In our use case, they describe an programming language and can be used, to parse the source code. Regular expressions are short statements, that avoid defining an entire grammar definition. Their downside is, that they are not able to describe alot of the features modern programming languages have. For example, it is not possible to write a regular grammar for the language that has the same amount of opening and closing brackets. An example for a regular expression would be this:
+The lexer will begin parsing at the start, identify the first token and continue. The resulting token stream may look like this.
 
-\begin{align*}
-a^*ba^*b
-\end{align*}
+\begin{lstlisting}[language=Java, caption="Example output of the lexer"]
+int_type 
+identifier
+bracket_open
+int_type
+identifier
+bracket_close
+curly_bracket_open
+return_stmt
+identifier
+add
+number
+semicolon
+curly_bracket_close
+\end{lstlisting}
 
-This would parse all words that have any amount of "a", followed by exactly one b, followed by any amount of "a", followed by exactly one b.
-
-To handle these situations, we require the context free grammars, they are able to parse more cases and are sufficient enough, to parse most programming languages. However, even the context free grammars are not powerfull enough to correctly verify if a given source code is valid. For this, we would technically need context sensitive grammars. Those come with the cost of a worse runtime, therefore usually context free grammars are used when writing compilers and additional verifications are done after the parsing to ensure the language is indeed valid source code.
-
-An example for a context free grammar:
-
-Let $\Sigma = \{E\}, N = \{a, b\}, S = \{E\}$ and the productions defined as:
-
-\begin{align*}
-P = \{&E \to a E b,\\
-&E \to \epsilon\}
-\end{align*}
-
-$\epsilon$ is a special symbol, it refers to the empty word. That means, that $E$ can be derived to nothing. Without this, we would have endless self recursion in the grammar rule.
-
-This grammar would be equivalent to the opening and closing bracket example from previously. This will parse any string, which has for one opening a exactly one opening b.
+Each line is one token. These tokens are used as the terminal symbols in the grammar definition.

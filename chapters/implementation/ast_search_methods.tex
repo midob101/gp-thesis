@@ -11,7 +11,7 @@ For this approach, each ast node has three methods.
 \item \verb|queryImmediateChildren: Selector -> QueryResult|
 \end{enumerate}
 
-The \verb|query| methods takes a selector and returns a \verb|QueryResult|. The \verb|QueryResult| contains all nodes in the subtree of the searched node which match the \verb|selector|. The \verb|QueryResult| can also contain the searched node itself.
+The \verb|query| method takes a selector and returns a \verb|QueryResult|. The \verb|QueryResult| contains all nodes in the subtree of the searched node which match the \verb|selector|. The \verb|QueryResult| can also contain the searched node itself.
 
 The \verb|queryChildren| behaves the same, but will not include the searched node itself.
 

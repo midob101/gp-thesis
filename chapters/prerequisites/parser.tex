@@ -19,17 +19,69 @@ Each of the presented grammars are not able to parse all context free grammars, 
 
 As memory and runtime is not the main priority in this thesis, a LR(1) parser was implemented to allow the largest amount of grammars being parsed.
 
-\subsubsection{LR(1)-Parsing}
 
-The LR(1) parsing strategy relies on two different tables. The first table is called an action table. The rows represents different states. The columns represent the terminal symbols of the grammar. The value of each cell can be empty, a shift, a reduce or an accept action. 
+The LR(1) parsing strategy relies on two different tables. The construction of the tables is explained in \cite{AhoLSU2006}.
 
-A shift action will consume a token from the token stream and move to a new state.
+The following example is taken from \cite{AhoLSU2006}.
+
+Let $N = \{S, C\}, \Sigma = \{c, d\}, S = S$ a grammar with the productions $P$ defined as
+
+\begin{align}
+P = \{&S \rightarrow C\text{ }C\\
+&C \rightarrow c\text{ }C\\
+&C \rightarrow d\}
+\end{align}
+
+Let r1 be a reference to the production rule $S \rightarrow C\text{ }C$, r2 be a reference to $C \rightarrow c\text{ }C$ and r3 be a reference to $C \rightarrow d$.
+
+The first table is called an action table.
+
+\begin{center}
+\begin{tabular}{c|ccc}
+State & $c$ & $d$ & \$\\
+\hline 
+0 & s3 & s4 & \\
+1 &    &    & acc \\
+2 & s6 & s7 & \\
+3 & s3 & s4 & \\
+4 & r3 & r3 & \\
+5 & & & r1\\
+6 & s6 & s7 & \\
+7 & & & r3\\
+8 & r2 & r2 & \\
+9 & & & r2
+\end{tabular} 
+\end{center}
+
+
+The rows represents different states. The columns represent the terminal symbols of the grammar. The value of each cell can be empty, a shift, a reduce or an accept action. 
+
+A shift action will consume a token from the token stream and move to a new state. For example, s6 will perform a shift and move to state 6.
 
 A reduce action will go back to a previously encountered state and references a grammar rule that is beeing reduced.
 
 A accept action is only defined once in the entire table. Once this is encountered, the parsing process is finished and the input was successfully parsed.
 
-The second table is the goto table. The rows represents the different states. The columns represent the non terminal symbols of the grammar. The content of each cell can either be a reference another state or empty.
+The second table is the goto table. 
+
+\begin{center}
+\begin{tabular}{c|cc}
+State & $S$ & $C$\\
+\hline 
+0 & 1 & 2\\
+1 &    &     \\
+2 &  & 5 \\
+3 &  & 8  \\
+4 &  &   \\
+5 &  & \\
+6 &  & 9 \\
+7 &  & \\
+8 &  &  \\
+9 &  & 
+\end{tabular} 
+\end{center}
+
+The rows represents the different states. The columns represent the non terminal symbols of the grammar. The content of each cell can either be a reference another state or empty.
 
 The parser itself manages a stack of states. The top of the stack is the current state that is currently being processed. The parser reads the current token in the token stream provided by the lexer and receives the current action from the action table.
 Based on the action type, different behaviours apply.

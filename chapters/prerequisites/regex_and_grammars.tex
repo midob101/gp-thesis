@@ -1,5 +1,19 @@
 \subsection{Regular Expressions and Grammars}
 
+Based on the paper of Naom Chomsky \cite{chomsky} a grammar $G$ consists of four components. 
+
+\begin{enumerate}
+    \item A finite set $N$ of nonterminal symbols.
+    \item A finite set $\Sigma$ of terminal symbols.
+    \item A finite set $P$ of production rules, each defined as $(\Sigma \cup N)^*N(\Sigma \cup N)^* \rightarrow (\Sigma \cup N)^*$, where $^*$ is the kleene closure operator \cite{Appel2002-kleene}.
+    \item A start symbol $S \in N$.
+\end{enumerate}
+
+By limiting the production rules $P$, several classes can be defined based on the chomsky hierarchy \cite{formal_languages_and_automata}.
+The main classes we are using in this thesis is the set of regular languages and the set of context free grammars.
+
+Regular languages are languages that can be described by a grammar where every $p \in P$ is defined as $N \rightarrow (Ba)$, where $B \in \Sigma$ and $a \in N$.
+
 In theoretical computer science, a grammar consists out of a set $\Sigma$ of terminal symbols, a set $N$ of nonterminal symbols, a set $P$ of productions and a start symbol $S$. $S$ is always a nonterminal symbol and therefore $S \in N$. The productions are defined as $P \subseteq (N \cup \Sigma)^+ \times (N \cup \Sigma)^*$. The $^+$ refers to one or more, the $^*$ refers to zero or more.
 
 Grammars can be seperated in different different classes based on the chromsky hierarchy. The main ones we are looking at in this thesis are the contextfree grammars and the regular grammars.

@@ -88,10 +88,36 @@
 \usepackage{multirow}
 \usepackage{multicol}
 \usepackage{longtable} % Große Tabellen gehen über mehrere Seiten.
+\usepackage{float}
 
 %% Intelligenteres Referenzieren mittels \cref.
 %% \languagename um dynamisch zwischen ngerman oder english zu wechseln.
 \usepackage[\languagename,capitalize]{cleveref}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+} 
+ 
+\lstset{style=mystyle}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (Ende) LaTeX Packages in Nutzung                                           %%
@@ -137,8 +163,8 @@
 \input{contents.tex}
 
 %% Dieser Part kann auskommentiert werden, sollte kein Anhang nötig sein
-% \appendix
-% \input{appendix.tex}
+\appendix
+\input{appendix.tex}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% (Ende) Der Inhalt der Arbeit                                               %%
