@@ -1,11 +1,15 @@
 
 \subsection{Code transpilation}
 
-This project may also be used to transpile code from a source grammar to a target grammar. As an example, a transpiler was written, which transpiles applications that use
-the extended MiniJava grammar to applications that use the regular MiniJava grammar. An example of a transpiler which performs operations like these would be babel. This tool is
-used to transpile a newer version of JavaScript into an older one, which can be executed by more browser. That allows the developer to utilize new functionalities of the programming language while not breaking backwards compability.
+This project may also be used to transpile code from a source grammar to a target grammar. 
+As an example, a transpiler was written, which transpiles applications that use
+the extended MiniJava grammar to applications that use the regular MiniJava grammar. 
+An example of a transpiler which performs operations like these would be babel. This tool is
+used to transpile a newer version of JavaScript into an older one, which can be executed by more browser. 
+That allows the developer to utilize new functionalities of the programming language while not breaking backwards compability.
 
-The goal of this implementation is to show the power of a rewritable abstract syntax tree. Especially for extended return syntax, we have to apply severe modifications to the sources
+The goal of this implementation is to show the power of a rewritable abstract syntax tree. 
+Especially for extended return syntax, we have to apply severe modifications to the sources
 to make it MiniJava compatible.
 
 \subsubsection{Conditionals}
@@ -23,3 +27,44 @@ For this, we use the following equivalent statements for $a, b \in \mathbb{Z}$:
 As we have reduced all new comparison operators to the less then operator now, we can implement the refactoring.
 
 This is done by creating a selector to find all comparisons, reading the comparison operator and performing the refactoring.
+The following code is an implementation of the transpilation process. The complete source is accessible at \cite{extended_mjava_transformation}.
+
+\begin{lstlisting}[language=Java, caption=Code transpilation]
+AbstractSyntaxTreeNode ast = gpModifiableAST.createAst(input);
+QueryResult comparisons = getComparisons();
+for(AbstractSyntaxTreeNode comparison: comparisons) {
+    AbstractSyntaxTreeNode left = getLeftNode();
+    TokenTreeNode compop = getCompOpNode();
+    AbstractSyntaxTreeNode right = getRightNode();
+
+    switch (compop.getValue()) {
+        case "<=":
+            compop.replace(new StringTreeNode("<"));
+            right.replace(List.of(
+                    new StringTreeNode("("),
+                    // As right is still attached to the tree, we need to
+                    // clone the node.
+                    right.deepClone(),
+                    new StringTreeNode(" + 1)")
+            ));
+            break;
+        case ">":
+            compop.replace(new StringTreeNode("<"));
+            left.replace(right.deepClone());
+            right.replace(left.deepClone());
+            break;
+        case ">=":
+            compop.replace(new StringTreeNode("<"));
+            left.replace(right.deepClone());
+            right.replace(List.of(
+                    new StringTreeNode("("),
+                    left.deepClone(),
+                    new StringTreeNode(" + 1)")
+            ));
+            break;
+        case "==":
+            // Replace equality operator
+            break;
+    }
+}
+\end{lstlisting}

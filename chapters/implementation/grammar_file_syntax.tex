@@ -58,14 +58,21 @@ The last matching definition wins.
 For example, the token definition \verb|true_literal = "true";| and the definition \verb|identifier = regex([a-zA-Z_][a-zA-Z_0-9]*);| would both match the string \verb|true|. 
 Therefore, the more general \verb|identifier| token should be defined before the \verb|true_literal| token. 
 This will cause the lexer to recognize the text \verb|true| as \verb|true_literal|. 
-A lexer key must be written in all lowercase letters and underscore.
+A lexer key must be written in all lowercase letters and underscores.
 
 The chapter \verb|HIDDEN_LEXER_RULES| is a comma separated list of lexer definition keys, 
 that should not be handled in the parsing process and should not be visible in the AST by default.
-This category should mainly be used for whitespaces and comments. If these are not added in category, the grammar rules need to handle those.
-As whitespaces and comments can be added basically everywhere, this would result in a very verbose definition of the productions.
+This category should be used mainly for whitespace and comments. If these are not added to the category, the grammar rules must handle them.
+Since whitespace and comments can be added basically anywhere, this would result in a very verbose definition of productions.
 
-The chapter \verb|GRAMMAR_RULES| contains all productions of this language. The syntax is similar, but not identical, to the backus natus form. (TODO: Source). The syntax has been extended with most of the modifiers suggested by \cite{GeneratingRewritableAST}. The terminals are the keys of the lexer definitions. The nonterminals are defined by the left sides of the productions. All nonterminals must be written in uppercase and underscore. \verb|EPSILON| is used for the empty word. Each terminal and nonterminal symbol can be extended by a list of modifiers in square brackets after the name. 
+The chapter \verb|GRAMMAR_RULES| contains all productions of this language. The syntax is similar, but not identical, to the backus natus form. (TODO: Source). 
+The syntax has been extended with most of the modifiers suggested by \cite{GeneratingRewritableAST}. 
+The terminals are the keys of the lexer definitions. ,
+The nonterminals are defined by the left sides of the productions. 
+All nonterminals must be written in uppercase and underscore. 
+\verb|EPSILON| is used for the empty word. 
+Each terminal and nonterminal symbol can be extended by a list of modifiers in square brackets after the name. 
+
 \verb|S -> S[alias=left] add T[alias=right]| defines the production with \verb|S| on the left and \verb|S add T| on the right. 
 \verb|S| refers to the same production, \verb|T| refers to a different production. 
 \verb|add| refers to a lexer definition. 

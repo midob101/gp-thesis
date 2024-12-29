@@ -4,14 +4,46 @@
 Yoda conditions are conditions in the form \verb|a compop b|, where \verb|a| is a literal (e.g. 5) and \verb|b| is a expression.
 Non Yoda conditions are conditions in the form \verb|b compop a|, where \verb|a| is a literal and \verb|b| is a expression.
 
-Usually in software development, you want to follow one style and use it for the whole project. Therefore, various IDEs and other tools like lexers exist, which check
-the styling and if possible fix them automatically. These tools may not exist for domain specific languages, therefore a usecase of this project can be those refactorings.
+Usually in software development, you want to follow one style and use it for the whole project. 
+Therefore, various IDEs and other tools like lexers exist, which check
+the styling and if possible fix them automatically. These tools may not exist for domain specific languages, 
+therefore a usecase of this project can be those refactorings.
 
-To implement this refactoring, we are using the extended MiniJava syntax. At first, we are applying a selector to find all comparison operators in the AST.
-From the result, we can simply grab the left and right side of the node, as they are decorated with an alias. If the left side is an integer literal, we swap the left and right node.
-At the end, we need to swap the \verb|compop| to the reflect the changes. \verb|<| will become \verb|>=|, \verb|>| will become \verb|<=|, \verb|<=| will become \verb|>|, \verb|>=| will become \verb|<|.
+To implement this refactoring, we are using the extended MiniJava syntax. 
+At first, we are applying a selector to find all comparison operators in the AST.
+From the result, we can simply grab the left and right side of the node, as they are decorated with an alias. 
+If the left side is an integer literal, we swap the left and right node.
+At the end, we need to swap the \verb|compop| to the reflect the changes. 
+\verb|<| will become \verb|>=|, \verb|>| will become \verb|<=|, \verb|<=| will become \verb|>|, \verb|>=| will become \verb|<|.
 \verb|==| will not need to be adjusted.
 
-With this simple code, we can adjust an entire project to not use yoda expressions. As we chose to add the whitespaces as real nodes to the AST, even though they are hidden, we do not mess up with the whitespaces.
-The node that corresponds to \verb|a| does only contain the \verb|a| constant. Any whitespaces between \verb|a| and \verb|compop| will be a seperate node in the AST. Therefore, by swapping a and b the formatting
+As we chose to add the whitespaces as real nodes to the AST, even though they are hidden, we do not mess up with the whitespaces.
+The node that corresponds to \verb|a| does only contain the \verb|a| constant. 
+Any whitespaces between \verb|a| and \verb|compop| will be a seperate node in the AST. Therefore, by swapping a and b the formatting
 of the file stays the same.
+
+The following code is a snippet from the actual refactoring implemented in \cite{yoda_refactoring}
+
+\begin{lstlisting}[language=Java, caption=Refactor Yoda conditions]
+if(leftIsLiteral && !rightIsLiteral) {
+    left.replace(right.deepClone());
+    right.replace(left.deepClone());
+
+    String newCompOp = compop.getValue();
+    switch (compop.getValue()) {
+        case "<":
+            newCompOp = ">";
+            break;
+        case "<=":
+            newCompOp = ">=";
+            break;
+        case ">":
+            newCompOp = "<";
+            break;
+        case ">=":
+            newCompOp = "<=";
+            break;
+    }
+    compop.replace(new StringTreeNode(newCompOp));
+}
+\end{lstlisting}

@@ -1,18 +1,34 @@
 
 \section{Implemented Grammars}
 
+There are two grammars implemented in \verb|gp-modifiable-ast| by default. 
+The first grammar is MiniJava. The MiniJava language was defined by \cite{Appel2002-kleene}. 
+
+The second grammar is an extension to MiniJava, which was defined for this thesis. This extended grammar allows for more operations in comparisons.
+This grammar is only used to illustrate some possible refactorings and use cases of \verb|gp-modifiable-ast|.
+
 \subsection{MiniJava}
 
-The MiniJava language was defined by \cite{Appel2002-kleene}. The implemented grammar is based on the transformed grammar in Backus Natus Form from \cite{minijava_bnf}.
+The implemented grammar is based on the transformed grammar in Backus Natus Form from \cite{minijava_bnf}.
 
-A grammar for a java subset has been defined, known as MiniJava. This is a very limited subset of Java, but it represents common constructs found in modern programming languages.
-It includes basic object oriented programming, simple conditional statements, while loops and basic arithmetic operations. However, the grammar is quite limited. For example, it does not
-allow any other comparison operator then \verb|<| and not more then one arithmetic operation without brackets. As these limitations make it hard, to create meaningfull refactorings, we have extended
+The MiniJava grammar has been defined by \verb|gp-modifiable-ast|. 
+This is a very limited subset of Java, but it represents common constructs found in modern programming languages.
+It includes basic object oriented programming, simple conditional statements, while loops and basic arithmetic operations. 
+However, the grammar is quite limited. For example, it does not allow any other comparison operator then \lstinline|<| and not more 
+then one arithmetic operation without brackets. As these limitations make it hard, to create meaningfull refactorings, we have extended
 the syntax of MiniJava aswell to allow for other operations.
 
-\subsection{Extended MiniJava Subset}
+\subsection{Extended MiniJava}
 
-The extended MiniJava grammar includes a few major changes. The first one allows for more comparison operators. Instead of only \verb|<| also \verb|>, <=, >=, ==| can be used.
-Another change is that \verb|return| is now a normal statemet. This means, that \verb|return| can appear anywhere in method declarations and not only anymore at the end of a method.
+The extended MiniJava grammar includes a small change to the grammar.
 
-These changes will allow us to demonstrate two refactorings which can be done with this tool. 
+The grammar allows the use of more comparison operators. MiniJava only allows \lstinline|<|.
+
+Extended MiniJava includes the other comparison operators \lstinline|>|, \lstinline|>=|, \lstinline|<=| and \lstinline|==|.
+
+Each of those comparison operators can be refactored to \lstinline|<|, as MiniJava only supports integers and not floating point values.
+
+The purpose of extended MiniJava is to perform a source code transformation, which converts any source code written in extended MiniJava to the
+the MiniJava syntax. These types of transformations are commonly used in practice, for example by Babel \cite{babeljs}, which is used to transform
+modern JavaScript into old JavaScript syntax. This allows developers to write code using the latest JavaScript standard while still supporting old browsers,
+that run transformed code.

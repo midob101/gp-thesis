@@ -1,13 +1,18 @@
-\section{Conclusion}
+\section{Conclusion and further work}
 
-The implemented library is capable of generating an AST, which retains all informations about the original sources.
-With the provided API it is possible, to traverse and modify the AST in a way to implement custom modifications to
-a given source.
-As the implemented library is not implemented to work for a specific programming language, it is not easily possible
-to obtain informations about certain objects.
-It is not easily possible to receive informations from other parts of an AST, like what type a
-variable is, as these informations are dependend on the source language and may not even be part of the source file.
+The implemented library is capable of generating an AST that preserves all information about the original sources.
+This is done by parsing a language definition file, building a LR(1) parser, parsing the source code, and building an AST
+which still contains all the tokens that are usually ignored by parsers.
+With the provided API, it is possible to traverse and modify the AST in a way to implement custom modifications to a given source.
 
-Therefore, this library is best used for refactorings to single nodes of an AST, which contains all informations required
-to perform the refactoring. For more complex tasks, additional features will have to be implemented, for example a symbol
-table. 
+The grammar for MiniJava has been defined and several refactorings have been implemented to show the functionality and usability of the implementation.
+
+A limiting factor is the effort required to define a language grammar. This could be improved by extending the grammar's
+syntax to accept the extended backus natus form.
+
+Another problem, due to the fact that the library is not implemented for a specific programming language, is the lack of 
+functionality of complete compiler frontends, including but not limited to symbol tables. If there is a way to 
+to create symbol tables and track the usage of certain variables, this library could be used for more refactorings.
+Currently, these functions must be built on top of the library.
+
+Therefore, this library is currently best used for refactorings to single nodes of an AST that contain all the information needed to perform the refactoring.

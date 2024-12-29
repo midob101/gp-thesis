@@ -1,24 +1,23 @@
 
 \subsection{Lexer}
 
-The parse process of a compiler is often times split into two parts. The first part is the so called lexer. 
-The task of the lexer is to take in the entire source code and create a so called token stream. 
-The lexer runs with regular expressions and avoids using more complex implementations for the most part.
+The parsing process of a compiler is often divided into two parts. The first part is the lexer. 
+The task of the lexer is to take the whole source code and create a token stream. 
+The lexer works with regular expressions and avoids more complex implementations.
 
-The lexer is a preparation for the parser, as it removes unwanted characters like whitespaces and generalizes 
-other tokens.
-For example could be any string matching the regular expression \verb|[a-zA-Z_][a-zA-Z_0-9]*| an identifier and \verb|[0-9]+| would be an integer. 
-The name identifier is often used for variable, function and classnames in lexers. 
-By doing this, the parser later only needs to work with the abstract identifier, not with the real input.
+The lexer is a preparation for the parser, since it usually removes unwanted characters like whitespace and generalizes other tokens.
+For example, any string matching the regular expression \verb|[a-zA-Z_][a-zA-Z_0-9]*| could be an identifier, and \verb|[0-9]+| would be an integer. 
+The name identifier is often used for variable, function and class names in lexers. 
+This way the parser only has to work with the abstract identifier, not with the real input.
 
-The following example should illustrate the purpose of the lexer process
+The following example illustrates the purpose of the lexer process
 \begin{lstlisting}[language=Java, caption="Example input for the lexer"]
 int get_fixed_sum(int a) {
     return a + 19284;
 }
 \end{lstlisting}
 
-The lexer will begin parsing at the start, identify the first token and continue. The resulting token stream may look like this.
+The lexer will start parsing at the beginning, identify the first token, and continue. The resulting token stream might look like this.
 
 \begin{lstlisting}[language=Java, caption="Example output of the lexer"]
 int_type 
@@ -36,4 +35,4 @@ semicolon
 curly_bracket_close
 \end{lstlisting}
 
-Each line is one token. These tokens are used as the terminal symbols in the grammar definition.
+Each line is a token. These tokens are used as terminal symbols in the grammar definition.
