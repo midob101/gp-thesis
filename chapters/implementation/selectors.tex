@@ -28,7 +28,7 @@ The following example of an AST is intended to illustrate the purpose of this ca
     \caption{AST example for selectors}
 \end{figure}
 
-To search for all \verb|METHOD_CALL| nodes, that call translate on a translator object, we will want these types of selectors.
+To search for all \verb|METHOD_CALL| nodes, that call translate on a translator object, these types of selectors will be used.
 
 An example selector for this would be
 
@@ -54,4 +54,4 @@ new AndSelector(
 )
 \end{lstlisting}
 
-By calling the \verb|query| method on the root node of the AST, we get all the \verb|METHOD_CALL| nodes in the AST that match those conditions.
+By calling the \verb|query| method on the root node of the AST, all the \verb|METHOD_CALL| nodes in the AST that match those conditions will be returned.

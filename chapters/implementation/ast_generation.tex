@@ -38,7 +38,7 @@ This grammar rule generates the following CST for an input with for example thre
     \caption{CST before the list modifier is applied}
 \end{figure}
 
-This structure is too verbose and difficult to work with in practice, so by using the \verb|[list]| modifier, we get the following AST.
+This structure is too verbose and difficult to work with in practice, so by using the \verb|[list]| modifier, the following AST gets generated.
 
 \begin{figure}[H]
     \centering
@@ -105,5 +105,5 @@ Therefore, the resulting AST does not contain the \lstinline{ARITHMETIC_EXPRESSI
 
 \cite{GeneratingRewritableAST} proposed additional modifiers that are not implemented in \verb|gp-modifiable-ast|.
 The first is the \verb|Boolean Access| modifier, which would replace a node with a boolean value depending on whether that symbol was parsed. 
-However, since we do not generate classes for every production, this would be of little use.
+However, since \verb|gp-modifiable-ast| do not generate classes for every production, this would be of little use.
 The same reason applies to the \verb|superclass| modifier, which would create a hierarchy in the generated classes of the parser generator.

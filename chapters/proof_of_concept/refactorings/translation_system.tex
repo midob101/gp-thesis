@@ -13,22 +13,24 @@ and \verb|"{NAME} has {COUNT} apples"| if \lstinline|COUNT| is not 1.
 The wanted translation is received by calling \lstinline|translate("apple", {NAME: user, COUNT: i})|.
 
 
-When switching to another translation system, which requires the pluralization parameter to be passed seperately, we are running into an issue. 
+When switching to another translation system, which requires the pluralization parameter to be passed seperately, an issue occures. 
 The desired call syntax will be: \lstinline|translate("apple", {NAME: user}, {COUNT: i})|
 
 The old code does not include any information, which of the parameters is the pluralization parameter. 
 We require the connection to an external source to correctly identify the wanted parameter.
 
-There are many difficulties to perform this refactoring, and no common IDE tools can help us with this.
-We might be able to perform this action with regex replacements, but we would need to write or generate a seperate regex for every single translation.
-Even if we get each different regex, there might still be more issues, like complex definitions of the parameters and it will not be possible to 
-parse every possibility of the call syntax, as regular expressions are not able to parse context free grammars which are not regular.
-In the worst case, unrelated code that should not have been modified gets changed and can lead to additional issues.
+This refactoring might be possible with regular expressions, but it would require a separate regular expression for each translation token.
+Even if such a regular expressions were generated for each translation token, no regular expression will be able to parse all possible call syntaxes in most programming languages.
+Therefore, not all replacements can be done by regular expressions, and only part of the refactoring will be done.
+In the worst case, a regular expression might match unrelated code and introduce new problems.
 
-There are different options to handle this case. We could do every refactoring manually, but this will be very time consuming if there are many translations.
-We could also implement the adapter pattern, which would allow us to hide the new API from the old code. Or as a last option, we could implement a custom solution.
+The refactoring could be done manually, but this will be very time consuming if there are many translations.
+Another rather simple solution would be to implement the adapter pattern \cite[pages 47-52]{java_design_patterns}. This design pattern allows us to use the old call syntax and the adapter translates it to the new call syntax at runtime.
+However, this solution would leave us with outdated code.
+The final option is to implement a custom solution.
 
-With \verb|gp-modifiable-ast| we are able to parse the sources, receive an AST and identify the translation key and all parameters passed.
-To identify which parameter is the pluralization parameter, we can receive the definition of the translation. Afterwards, 
-we can simply remove the pluralization parameter
-from the call syntax and add it as a new parameter to the function call.
+With \verb|gp-modifiable-ast|, the sources can be parsed given a grammar, receive an AST, and identify the translation key and any parameters passed.
+To identify which parameter is the pluralization parameter, the definition of the translation can be received. 
+Then the pluralization parameter can be removed from the call syntax and added as a new parameter to the function call.
+
+This refactoring has not yet been implemented, as both the MiniJava and extended MiniJava grammars are not sufficient to support an illustrative example.

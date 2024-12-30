@@ -12,7 +12,7 @@ syntax to accept the extended backus naur form.
 
 Another problem, due to the fact that the library is not implemented for a specific programming language, is the lack of 
 functionality of complete compiler frontends, including but not limited to symbol tables. If there is a way to 
-create symbol tables by extending the language definition file and track the usages of variables, this library could be used for more complex refactorings.
+create symbol tables and detect usages by extending the language definition file, this library could be used for more complex refactorings.
 Currently, these functions must be built on top of the library.
 
 Therefore, this library is currently best used for refactorings to single subtrees of an AST that contain all the information needed to perform the refactoring.

@@ -1,6 +1,6 @@
 \subsection{Extendability}
 
-To allow for possible extensibility, we allow for several types of customization
+To allow for possible extensibility, \verb|gp-modifiable-ast| allow for several types of customization
 
 \subsubsection{Lexer}
 
@@ -35,9 +35,9 @@ public class ExampleCustomMatcher implements ICustomMatcher {
 \subsubsection{AST Generation}
 
 We allow several ways to customize AST generation. 
-First, you can implement custom modifiers for grammar symbols.
+First, a user can implement custom modifiers for grammar symbols.
 You can also post-process and decorate the AST. 
-For example, you can replace the tree nodes with your own implementation by extending \verb|AbstractSyntaxTreeNode|.
+For example, a user can replace the tree nodes with your own implementation by extending \verb|AbstractSyntaxTreeNode|.
 
 The following example is an implementation of a tree node that is simply a string.
 This tree node can be used to add or replace code in the AST.
