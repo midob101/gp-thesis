@@ -9,14 +9,13 @@ This grammar is only used to illustrate some possible refactorings and use cases
 
 \subsection{MiniJava}
 
-The implemented grammar is based on the transformed grammar in Backus Natus Form from \cite{minijava_bnf}.
+The implemented grammar is based on the transformed grammar in backus naur form from \cite{minijava_bnf}.
 
 The MiniJava grammar has been defined by \verb|gp-modifiable-ast|. 
 This is a very limited subset of Java, but it represents common constructs found in modern programming languages.
 It includes basic object oriented programming, simple conditional statements, while loops and basic arithmetic operations. 
 However, the grammar is quite limited. For example, it does not allow any other comparison operator then \lstinline|<| and not more 
-then one arithmetic operation without brackets. As these limitations make it hard, to create meaningfull refactorings, we have extended
-the syntax of MiniJava aswell to allow for other operations.
+then one arithmetic operation without brackets. As these limitations make it hard, to create meaningfull refactorings, the syntax of MiniJava was extended for this thesis to allow for other operations.
 
 \subsection{Extended MiniJava}
 
@@ -31,4 +30,4 @@ Each of those comparison operators can be refactored to \lstinline|<|, as MiniJa
 The purpose of extended MiniJava is to perform a source code transformation, which converts any source code written in extended MiniJava to the
 the MiniJava syntax. These types of transformations are commonly used in practice, for example by Babel \cite{babeljs}, which is used to transform
 modern JavaScript into old JavaScript syntax. This allows developers to write code using the latest JavaScript standard while still supporting old browsers,
-that run transformed code.
+that run the transformed code.

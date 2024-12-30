@@ -19,6 +19,8 @@ The \verb|queryChildren| behaves the same way, but does not include the searched
 
 The \verb|queryImmediateChildren| will return only the immediate children of the searched node that match the \verb|selector|.
 
+These methods are able to find hidden nodes.
+
 The \verb|QueryResult| instance also allows to perform queries on the result. 
 This will perform the corresponding method on all nodes in the result and create a new \verb|QueryResult| instance containing the merged results of each node. 
 This allows for easy chaining of selectors. 

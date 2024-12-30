@@ -1,6 +1,6 @@
 \subsection{CST-Generation}
 The concrete syntax tree (CST) is a tree structure that exactly matches the grammar and lexer definitions. 
-The generated CST should also contain nodes that are usually omitted, such as comments or whitespace.
+The generated CST should also contain nodes that are usually omitted, such as comments or whitespaces.
 
 The CST is implemented by a \verb|ConcreteSyntaxTreeNode| class. 
 A node can refer to either a production or a lexer token. 
@@ -17,9 +17,9 @@ On a reduce action the parser will also create a new tree node.
 This tree node will have other tree nodes from the top of the stack as children. 
 This behavior is very similar to how the the parser manages its state. 
 The main difference is the tokens in the \verb|HIDDEN_LEXER_RULES|. 
-The reduced production may have only one symbol on the right side, but on the tree node stack there are two nodes from \verb|HIDDEN_LEXER_RULES|. 
+For example, the reduced production may have only one symbol on the right side, but on the tree node stack there are two nodes from \verb|HIDDEN_LEXER_RULES|. 
 In this case the parser will pop three states from the top of the tree node stack and add them as children of the newly created node in reverse order. 
-However, if the parser reaches the \verb|acc| state, it is not guaranteed that the stack contains only the root node. 
+Another difference is that when the parser reaches the \verb|acc| state, it is not guaranteed that the tree node stack contains only the root node. 
 There may be tokens from \verb|HIDDEN_LEXER_RULES| which appeared at the beginning of the parsed string. 
 So the parser will find the root node and prepend all other entries in the tree node stack to the children of the root node. 
 
@@ -46,7 +46,7 @@ if(isReduceAction()) {
 }
 
 if(isAcceptAction()) {
-    TreeNode rootNode = danglingTreeNodeStack.pop();
+    TreeNode rootNode = extractRootNode(danglingTreeNodeStack);
 
     while(!danglingTreeNodeStack.isEmpty()) {
         TreeNode treeNode = danglingTreeNodeStack.pop();

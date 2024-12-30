@@ -19,7 +19,7 @@ The user defines a grammar file for a given programming language and provides th
 
 This language definition is then passed along with the source code by the user to the lexer process, 
 which passes the token stream and the language definition to the
-to the parser process. The parser process parses the token stream, applies the grammar rules and creates the concrete syntax tree.
+parser process. The parser process parses the token stream, applies the grammar rules and creates the concrete syntax tree.
 
 In the next step, the concrete syntax tree and the grammar definition will be used to create the abstract syntax tree.
 
@@ -27,3 +27,4 @@ This is the output of the \verb|gp-modifiable-ast| library. By using selectors, 
 the user can perform search actions on the AST to find
 specific nodes. On the nodes found, the user can apply modifications and convert the AST back to source code.
 
+The following sections will describe the behaviour and architecture of the components.

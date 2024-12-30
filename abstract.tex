@@ -1,23 +1,25 @@
 
 % Basic introduction
 Software developers are often facing the issue of maintaining large amount of source code. 
-The keep the source code up to date, often times a process called refactoring is needed, in which the software developers update the code.
+To keep the source code up to date, often times a process called refactoring is needed, in which the software developers restructure source code.
+Refactorings do not change the behaviour of a program.
 
 % Detailed background
-To allow the software developers to perform these updates automatically, most integrated development environments (IDE) provide tools to 
+To allow the software developers to perform refactorings automatically, most integrated development environments (IDE) provide tools to 
 perform predefined refactorings automatically. 
 The effort of performing some refactorings on large code bases can be too much to perform manually. 
-Most of the times, the tools provided by the IDE are sufficient to perform the refactorings, but sometimes a custom solution is required.
+Most of the time, the tools provided by the IDE are sufficient to perform the refactorings, but sometimes a custom solution is required.
 One way to create automated custom refactorings is by parsing the source code and building it into an abstract syntax tree (AST), 
 which can be manipulated.
 
 
 % Summarizing result
-Here we provide a Java library, which can parse a subset of the context-free language based on their corresponding grammar definition 
-and generates a AST which can be modified by the user and afterwards reverted back to the source code.
+For this thesis a Java library was created, which can parse a subset of the context-free languages based on their corresponding grammar definitions 
+and generates an AST based on a grammar definition. The AST provides several methods to search and modify the tree. The library can convert the AST
+back to source code at the end of modifications, while keeping most of the formatting and comments of the original source file.
 
 % What does the main result reveal?
 
-The program provides a relatively easy method of safe large scale refactorings, however the effort of defining a grammar is large.
-It also has been shown, that this tool can also be used to extend a given programming language and allow for additional features to be added, 
+The program provides a relatively easy method of safe large scale refactorings, however the effort of defining a grammar is of considerable size.
+It has been shown, that this tool can also be used to extend a given programming language and allow for additional features to be added, 
 basicly allowing for a primitive form of source to source compilation. 

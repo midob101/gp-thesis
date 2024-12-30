@@ -8,11 +8,11 @@ With the provided API, it is possible to traverse and modify the AST in a way to
 The grammar for MiniJava has been defined and several refactorings have been implemented to show the functionality and usability of the implementation.
 
 A limiting factor is the effort required to define a language grammar. This could be improved by extending the grammar's
-syntax to accept the extended backus natus form.
+syntax to accept the extended backus naur form.
 
 Another problem, due to the fact that the library is not implemented for a specific programming language, is the lack of 
 functionality of complete compiler frontends, including but not limited to symbol tables. If there is a way to 
-to create symbol tables and track the usage of certain variables, this library could be used for more refactorings.
+create symbol tables by extending the language definition file and track the usages of variables, this library could be used for more complex refactorings.
 Currently, these functions must be built on top of the library.
 
-Therefore, this library is currently best used for refactorings to single nodes of an AST that contain all the information needed to perform the refactoring.
+Therefore, this library is currently best used for refactorings to single subtrees of an AST that contain all the information needed to perform the refactoring.

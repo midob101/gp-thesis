@@ -2,9 +2,7 @@
 The productions and lexer definitions are defined separately from the implementations in their own text files. 
 Each language has exactly one text file defining the productions and lexer definitions. The contents are divided into four different chapters.
 
-The following example shows a grammar for arithmetic expressions that could be found in a programming language grammar.
-
-This grammar allows to parse simple arithmetic expressions and allows comments and whitespaces.
+The following example shows a grammar that could be a part of a programming language grammar, which allows to parse simple arithmetic expressions and allows comments and whitespaces.
 
 \begin{lstlisting}[caption=Grammar file example]
 LANGUAGE_DEF
@@ -45,14 +43,15 @@ This grammar file would be able to parse the following sample code:
 \end{lstlisting}
 
 The first chapter is \verb|LANGUAGE_DEF|. This contains some general definitions for the language. 
-This chapter contains e.g. which comment styles are allowed and how they are identified, the name of the language, the file extension used, whether the language is case-sensitive, and which production should be used as the starting production, 
-whether the language is case-sensitive or not, and which production should be used as the starting production. 
+This chapter contains e.g. how comment styles are identified, the name of the language, whether the language is case-sensitive, which production should be used as the starting production, 
+and whether the language is case-sensitive or not. 
 All settings here are defined as key-value pairs.
+The available options are \lstinline|name, single_line_comment_style, multi_line_comment_style_start, multi_line_comment_style_end, case_sensitive, grammar_start|.
 
 The second chapter is the \verb|LEXER_RULES|. 
 This defines all the tokens that can occur in the source file and that the lexer should handle. 
 The lexer can handle three different types of definitions. 
-The first type matches a fixed string. The second type matches a regex. 
+The first type matches a fixed string. The second type matches a regular expression. 
 The last type uses a custom implementation to check for a match. 
 The last matching definition wins. 
 For example, the token definition \verb|true_literal = "true";| and the definition \verb|identifier = regex([a-zA-Z_][a-zA-Z_0-9]*);| would both match the string \verb|true|. 
@@ -62,12 +61,12 @@ A lexer key must be written in all lowercase letters and underscores.
 
 The chapter \verb|HIDDEN_LEXER_RULES| is a comma separated list of lexer definition keys, 
 that should not be handled in the parsing process and should not be visible in the AST by default.
-This category should be used mainly for whitespace and comments. If these are not added to the category, the grammar rules must handle them.
+This category should be used mainly for whitespace and comment tokens. If these are not added to the category, the grammar rules must handle them.
 Since whitespace and comments can be added basically anywhere, this would result in a very verbose definition of productions.
 
-The chapter \verb|GRAMMAR_RULES| contains all productions of this language. The syntax is similar, but not identical, to the backus natus form. (TODO: Source). 
+The chapter \verb|GRAMMAR_RULES| contains all productions of this language. The syntax is similar, but not identical, to the backus naur form \cite{AhoLSU2006}. 
 The syntax has been extended with most of the modifiers suggested by \cite{GeneratingRewritableAST}. 
-The terminals are the keys of the lexer definitions. ,
+The terminals are the keys of the lexer definitions.
 The nonterminals are defined by the left sides of the productions. 
 All nonterminals must be written in uppercase and underscore. 
 \verb|EPSILON| is used for the empty word. 

@@ -3,32 +3,32 @@
 
 This is an example for a refactoring, which may be required to be performed on a large scale and that is not doable by common tools.
 
-Let a translation system be a system, which stores for a key some data. This data includes the translations for each desired language and parameters.
+Let a translation system be a system, which stores some data for some keys. This data includes the translations for each desired language and parameters.
 A parameter is a variable, which gets dynamically inserted into the text. One of the parameters can be used as a pluralization parameter.
 
 For example, the key \verb|"apple"| resolves to the english translation \verb|"{NAME} has {COUNT} apple"| if the parameter \lstinline|COUNT| is 1 
 and \verb|"{NAME} has {COUNT} apples"| if \lstinline|COUNT| is not 1.
 \lstinline|{NAME}| is a second parameter, which does not require any pluralization.
 
-The wanted translation is received by calling \lstinline|translate("apple", {name: user, COUNT: i})|.
+The wanted translation is received by calling \lstinline|translate("apple", {NAME: user, COUNT: i})|.
 
 
 When switching to another translation system, which requires the pluralization parameter to be passed seperately, we are running into an issue. 
-The desired call syntax will be: \lstinline|translate("apple", {name: user}, {COUNT: i})|
+The desired call syntax will be: \lstinline|translate("apple", {NAME: user}, {COUNT: i})|
 
 The old code does not include any information, which of the parameters is the pluralization parameter. 
 We require the connection to an external source to correctly identify the wanted parameter.
 
 There are many difficulties to perform this refactoring, and no common IDE tools can help us with this.
 We might be able to perform this action with regex replacements, but we would need to write or generate a seperate regex for every single translation.
-Even if we get each different regex, there might still be more issues, like complex definitions of the parameters and it will be not possible to 
+Even if we get each different regex, there might still be more issues, like complex definitions of the parameters and it will not be possible to 
 parse every possibility of the call syntax, as regular expressions are not able to parse context free grammars which are not regular.
 In the worst case, unrelated code that should not have been modified gets changed and can lead to additional issues.
 
 There are different options to handle this case. We could do every refactoring manually, but this will be very time consuming if there are many translations.
 We could also implement the adapter pattern, which would allow us to hide the new API from the old code. Or as a last option, we could implement a custom solution.
 
-With the gp-modifiable-ast-parser we are able to parse the sources, receive an AST and identify the translation key and all parameters passed.
+With \verb|gp-modifiable-ast| we are able to parse the sources, receive an AST and identify the translation key and all parameters passed.
 To identify which parameter is the pluralization parameter, we can receive the definition of the translation. Afterwards, 
 we can simply remove the pluralization parameter
 from the call syntax and add it as a new parameter to the function call.

@@ -19,7 +19,7 @@ Each modifier has its own implementation and is applied bottom-up for each node.
 
 \subsubsection{list-Modifier}
 
-The \verb|list| modifier, intended by \cite{GeneratingRewritableAST}, is a modifier designed to flatten out self-recursive productions. 
+The \verb|list| modifier, proposed by \cite{GeneratingRewritableAST}, is a modifier designed to flatten out self-recursive productions. 
 This modifier can only be applied to symbols on the left side of a production. 
 The following example could be a production for the function parameters in common programming languages.
 
@@ -29,7 +29,7 @@ PARAMETER_LIST[list] -> PARAMETER_LIST PARAMETER |
                         EPSILON;
 \end{lstlisting}
 
-This grammar rule generates the following CST for an input with three parameters.
+This grammar rule generates the following CST for an input with for example three parameters.
 
 
 \begin{figure}[H]
@@ -53,7 +53,7 @@ Since the modifiers are applied bottom-up, this works for nested trees.
 
 \subsubsection{alias-Modifier}
 
-The \verb|alias| modifier, purposed by \cite{GeneratingRewritableAST}, is a modifier that can be applied to any symbol on the right hand side of a production. 
+The \verb|alias| modifier, proposed by  \cite{GeneratingRewritableAST}, is a modifier that can be applied to any symbol on the right hand side of a production. 
 This modifier, adds an alias to the tree node that can be used to search the tree. 
 The following could be an example of a production for addition in a programming language.
 
@@ -69,7 +69,7 @@ This modifier is applied by simply storing the alias in the tree node.
 
 \subsubsection{hidden-Modifier}
 
-The \verb|hidden| modifier, purposed by \cite{GeneratingRewritableAST}, is a modifier that can be applied to terminal symbols on the right hand side of a production.
+The \verb|hidden| modifier, proposed by \cite{GeneratingRewritableAST}, is a modifier that can be applied to terminal symbols on the right hand side of a production.
 This modifier will hide the tree node in the AST. 
 In the previous example of the \verb|ADD| production, the \verb|ADD| tree node would have a \verb|TokenTreeNode| child that references the \verb|plus| lexer definition. 
 This information is obsolete because the production will always contain this node, and the production name already contains the necessary information. 
@@ -77,15 +77,33 @@ By applying the \verb|hidden| modifier to the \verb|plus| symbol, the correspond
 
 \subsubsection{inline-Modifier}
 
-The \verb|inline| modifier, purposed by \cite{GeneratingRewritableAST}, is a modifier that can be applied to nonterminal symbols on the right hand side of a production. 
+The \verb|inline| modifier, proposed by \cite{GeneratingRewritableAST}, is a modifier that can be applied to nonterminal symbols on the right hand side of a production. 
 
 Applying the modifier will replace the node with all its children. 
 This modifier should be used on nonterminals that do not carry important information themselves, but their children do. 
 This way all information is preserved, but the tree structure is simplified.
 
+The following grammar should illustrate the purpose of this modifier.
+
+\begin{lstlisting}[caption=inline modifier example grammar]
+EXPRESSION              ->      ARITHMETIC_EXPRESSION[inline];
+ARITHMETIC_EXPRESSION   ->      PLUS_EXPRESSION;
+PLUS_EXPRESSION         ->      integer plus integer;
+\end{lstlisting}
+
+The \lstinline{ARITHMETIC_EXPRESSION} production is only used for creating the grammar in this case, as it may not be possible to create an LR(1) grammar without it.
+Another reason for defining a grammar this way is to prevent duplications. If \lstinline{ARITHMETIC_EXPRESSION} is also used at other places in the grammar file,
+the extraction into a new production can reduce the total size of a grammar definition and improve the maintainability.
+
+This production carries however no information itself that are relevant to the program structure, therefore it can be ommitted in the AST.
+
+This modifier is implemented by replacing all \verb|ProductionTreeNodes| that have this modifier with their corresponding children.
+
+Therefore, the resulting AST does not contain the \lstinline{ARITHMETIC_EXPRESSION} node.
+
 \subsubsection{Not implemented modifiers}
 
-\cite{GeneratingRewritableAST} purposed additional modifiers that are not implemented in \verb|gp-modifiable-ast|.
+\cite{GeneratingRewritableAST} proposed additional modifiers that are not implemented in \verb|gp-modifiable-ast|.
 The first is the \verb|Boolean Access| modifier, which would replace a node with a boolean value depending on whether that symbol was parsed. 
-However, since we do not generate classes for every production, this would be of little use to us.
+However, since we do not generate classes for every production, this would be of little use.
 The same reason applies to the \verb|superclass| modifier, which would create a hierarchy in the generated classes of the parser generator.

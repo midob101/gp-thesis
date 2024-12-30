@@ -6,7 +6,7 @@ To allow for possible extensibility, we allow for several types of customization
 
 As mentioned before, lexer definitions can contain custom matchers. 
 These matchers are custom implementations that are referenced by a name in the grammar file. 
-These classes are written by the user and registered by calling \verb|CustomMatcherRegistry.registerCustomMatcher|. 
+These classes are written by the user and registered by calling \lstinline|CustomMatcherRegistry.registerCustomMatcher|. 
 A custom matcher must implement the \verb|ICustomMatcher| interface. 
 A matcher gets a \verb|LexerContext| and returns \verb|null| or the matched string. 
 Using the \verb|LexerContext| parameter, the matcher can receive the remaining input and check if the beginning of the remaining input can be tokenized by this matcher.
@@ -66,7 +66,7 @@ public class StringTreeNode extends AbstractSyntaxTreeNode {
 
 \subsubsection{Selectors}
 
-Custom selectors can be defined by implementing \verb|ISelector|. 
+Custom selectors can be defined by extending \verb|BaseSelector|. 
 These can be easily defined and used with the query methods of the tree node.
 
 The following example shows the implementation of a selector that matches a tree node based on the production used to create that node.

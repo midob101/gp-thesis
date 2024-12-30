@@ -6,13 +6,13 @@ For this thesis a Java library called \verb|gp-modifiable-ast| was implemented.
 \subsection{Motivation}
 
 The motivation for this work came from a practical problem. 
-During the development of a large enterprise web application, there was a need to change the translation system.
-A translation system receives a token as a string and returns a predefined translation depending on the target language.
+During the development of a large enterprise web application a change of the translation system was needed.
+A translation system receives a token as a string and returns a predefined translation depending on the desired language.
 This caused some problems because the new translation system had a different call syntax than the old one.
 This refactoring required looking at external data stored in a database for each different call to the translation function.
 Because of the dependency on external data, the automatic tools provided by the IDE were not sufficient to refactor these calls.
 
-On the other hand, this would have been a very time-consuming task to do manually, as there were over ten thousand calls to this function.
+This would have been a very time-consuming task to do manually, as there were over ten thousand calls to this function. Therefore another solution was needed.
 
 To solve this problem, a special JavaScript parser like Esprima \cite{esprima} was used. 
 Esprima can parse JavaScript, provide an AST, allow modifications on the AST, and convert back to source code.
@@ -31,7 +31,7 @@ to be able to transform the AST back into source code while maintaining all whit
 
 The following example is intended to illustrate that rewritable abstract syntax trees can be used for refactorings that require some knowledge of the program structure.
 The change that should be made to the following source code is to rename all variables to enforce a camel case naming scheme for variables, while keeping
-Pascal case for function names. While this can be done with IDE tools, it would require manual effort each time.
+snake case for function names. While this can be done with IDE tools, it would require manual effort each time.
 
 Implementing a custom solution can enforce this naming scheme automatically.
 
@@ -48,7 +48,7 @@ The resulting AST from this code might look like this:
     \caption{AST example}
 \end{figure}
 
-This AST contains a lot of information about the program structure and allows you to distinguish between variable and function names.
+This AST contains a lot of information about the program structure and allows to distinguish between variable and function names.
 \footnote{
     Depending on the grammar and language, this differentiation may not always be possible on the generated AST. 
     For example in JavaScript, functions can be passed as parameters into other functions: 
@@ -69,7 +69,7 @@ This transformation would result in the following code.
 
 \begin{lstlisting}[language=Java, caption=Example of transformation]
 void should_be_snake_case(int shouldBeCamelCase) {
-    int secondParam = firstParam;
+    int secondVariable = shouldBeCamelCase;
 }
 \end{lstlisting}
 
@@ -80,12 +80,15 @@ because they allow a wide range of refactorings by providing access to different
 
 The library implemented for this thesis (\verb|gp-modifiable-ast|) has similarities to common parser generators 
 such as SableCC \cite{sablecc}, ANTLR \cite{antlr}, GNU Bison \cite{gnu-bison} and others.
+These parser generators are mainly used for compiler development, therefore they have a different purpose than this paper.
+They do not need to be able to convert the AST back to the source code while maintaining the formatting and comments.
+Trying to use these tools for this purpose 
 
 There are custom parsers like Esprima \cite{esprima} that can generate a modifiable AST for JavaScript sources, 
 but these are limited to a specific programming language.
-
-\verb|gp-modifiable-ast| is able to preserve the original formatting as much as possible and 
-can be defined for any grammar that can be parsed by an LR(1) parser.
+Roslyn \cite{rosl} is an implementation of the C\# and Visual Basic compilers, which also provides an API for analysis and code manipulation.
+These tools are different from this thesis, as they are limited to one or a few specific programming languages.
+They are not intended to be used for a fast variety of languages.
 
 This work is based on the conference paper by Jeffrey L. Overbey and Ralph E. Johnson with the title 
 "Generating Rewritable Abstract Syntax Trees" \cite{GeneratingRewritableAST}.

@@ -4,6 +4,6 @@
 Most parser generators will generate source code for the parser.
 This allows the user to modify the generated classes, for example by adding new methods. 
 This allows better usability if done correctly, and better performance. 
-Instead of generating code for the parser, gp-modifiable-ast will use generic classes that are the same for all grammars being parsed. 
+Instead of generating code for the parser, \verb|gp-modifiable-ast| will use generic classes that are the same for all grammars being parsed. 
 This approach does not require any additional code generation by the parser and allows an easier introduction to the system, since a language definition and a source file can simply be passed to the parser generator and an 
 AST is generated. Otherwise, the parser must first be generated and then the parser must be called to parse the source file.
